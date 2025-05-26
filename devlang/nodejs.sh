@@ -25,7 +25,7 @@ for shellrc in "${shellrcs[@]}"; do
 	if ! [[ -e "$HOME/$shellrc" ]]; then
 		touch "$HOME/$shellrc"
 	fi
-	if ! grep -i "# NodeJS" "$HOME/$shellrc"; then
+	if ! grep -i "# NodeJS" "$HOME/$shellrc" &>/dev/null; then
 		tee -a "$HOME/$shellrc" <<-EOF
 			# NodeJS
 			export NPM_CONFIG_CACHE=\$HOME/.node

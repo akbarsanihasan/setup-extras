@@ -29,7 +29,7 @@ for shellrc in "${shellrcs[@]}"; do
 	if ! [[ -e "$HOME/$shellrc" ]]; then
 		touch "$HOME/$shellrc"
 	fi
-	if ! grep -i "# PHP" "$HOME/$shellrc"; then
+	if ! grep -i "# PHP" "$HOME/$shellrc" &>/dev/null; then
 		tee -a "$HOME/$shellrc" <<-EOF
 			# PHP
 			export PATH="/usr/local/php/bin:\$PATH"

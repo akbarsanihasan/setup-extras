@@ -24,7 +24,7 @@ for shellrc in "${shellrcs[@]}"; do
 	if ! [[ -e "$HOME/$shellrc" ]]; then
 		touch "$HOME/$shellrc"
 	fi
-	if ! grep -i "# Golang" "$HOME/$shellrc"; then
+	if ! grep -i "# Golang" "$HOME/$shellrc" &>/dev/null; then
 		tee -a "$HOME/$shellrc" <<-EOF
 			# Golang
 			export PATH="/usr/local/go/bin:\$PATH"

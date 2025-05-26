@@ -20,7 +20,7 @@ for shellrc in "${shellrcs[@]}"; do
 	if ! [[ -e "$HOME/$shellrc" ]]; then
 		touch "$HOME/$shellrc"
 	fi
-	if ! grep -i "# Rust" "$HOME/$shellrc"; then
+	if ! grep -i "# Rust" "$HOME/$shellrc" &>/dev/null; then
 		tee -a "$HOME/$shellrc" <<-EOF
 			# Rust
 			[ -s "\$HOME/.cargo/env" ] && . "\$HOME/.cargo/env"
