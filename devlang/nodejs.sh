@@ -1,7 +1,5 @@
 #!/usr/bin/env bash
 
-source ./Shared/add_path
-
 export NPM_CONFIG_CACHE=$HOME/.node
 export NPM_CONFIG_PREFIX=$HOME/.node
 
@@ -22,13 +20,19 @@ fi
 eval "$(fnm env --fnm-dir "$HOME"/.node)"
 fnm install --lts
 
-if [[ "$(command -v fnm)" == "/usr/local/bin/fnm" ]] && command -v /usr/local/bin/fnm; then
-	add_path <<-EOF
-		# NodeJS
-		export NPM_CONFIG_CACHE=\$HOME/.node
-		export NPM_CONFIG_PREFIX=\$HOME/.node
-		if command -v fnm &>/dev/null; then
-		   eval "\$(fnm env --fnm-dir "\$HOME"/.node)"
-		fi
-	EOF
-fi
+shellrcs=(.zshrc .bashrc)
+for shellrc in "${shellrcs[@]}"; do
+	if ! [[ -e "$HOME/$shellrc" ]]; then
+		touch "$HOME/$shellrc"
+	fi
+	if ! grep -i "# NodeJS" "$HOME/$shellrc"; then
+		tee -a "$HOME/$shellrc" <<-EOF
+			# NodeJS
+			export NPM_CONFIG_CACHE=\$HOME/.node
+			export NPM_CONFIG_PREFIX=\$HOME/.node
+			if command -v fnm &>/dev/null; then
+			   eval "\$(fnm env --fnm-dir "\$HOME"/.node)"
+			fi
+		EOF
+	fi
+done

@@ -1,7 +1,5 @@
 #!/usr/bin/env bash
 
-source ./Shared/add_path
-
 if command -v pacman &>/dev/null; then
 	sudo pacman -S --noconfirm --needed curl
 fi
@@ -26,10 +24,16 @@ if ! [[ -f /usr/local/php/php.ini ]]; then
 	EOF
 fi
 
-if [[ "$(command -v php)" == "/usr/local/php/bin/php" ]] && command -v /usr/local/php/bin/php; then
-	add_path <<-EOF
-		# PHP
-		export PATH="/usr/local/php/bin:\$PATH"
-		export PHP_INI_SCAN_DIR="/usr/local/php:\$PHP_INI_SCAN_DIR"
-	EOF
-fi
+shellrcs=(.zshrc .bashrc)
+for shellrc in "${shellrcs[@]}"; do
+	if ! [[ -e "$HOME/$shellrc" ]]; then
+		touch "$HOME/$shellrc"
+	fi
+	if ! grep -i "# PHP" "$HOME/$shellrc"; then
+		tee -a "$HOME/$shellrc" <<-EOF
+			# PHP
+			export PATH="/usr/local/php/bin:\$PATH"
+			export PHP_INI_SCAN_DIR="/usr/local/php:\$PHP_INI_SCAN_DIR"
+		EOF
+	fi
+done
