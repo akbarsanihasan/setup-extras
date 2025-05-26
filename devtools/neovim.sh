@@ -34,7 +34,7 @@ make CMAKE_BUILD_TYPE=Release \
 sudo make install
 
 if ! [[ -d $HOME/.config/nvim ]]; then
-	git clone https://"$GIT_TOKEN"@github.com/"$GIT_USER"/nvimrc.git "$HOME"/.config/nvim
+	git clone https://github.com/akbarsanihasan/nvimrc.git "$HOME"/.config/nvim
 fi
 
 cd "$current_dir"
