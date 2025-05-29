@@ -12,13 +12,13 @@ if command -v apt &>/dev/null; then
 	sudo apt-get install -y curl unzip
 fi
 
-if ! command -v fnm &>/dev/null; then
+if ! command -v "$HOME"/.local/bin/fnm &>/dev/null; then
 	curl -fsSL https://fnm.vercel.app/install |
-		sudo bash -s -- --skip-shell --install-dir /usr/local/bin
+		bash -s -- --skip-shell --install-dir "$HOME"/.local/bin
 fi
 
-eval "$(fnm env --fnm-dir "$HOME"/.node)"
-fnm install --lts
+eval "$("$HOME"/.local/bin/fnm env --fnm-dir "$HOME"/.node)"
+"$HOME"/.local/bin/fnm install --lts
 
 shellrcs=(.zshrc .bashrc)
 for shellrc in "${shellrcs[@]}"; do
@@ -30,7 +30,7 @@ for shellrc in "${shellrcs[@]}"; do
 			# NodeJS
 			export NPM_CONFIG_CACHE=\$HOME/.node
 			export NPM_CONFIG_PREFIX=\$HOME/.node
-			if command -v fnm &>/dev/null; then
+			if command -v fnm &>/dev/null || command -v $HOME/.local/bin/fnm &>/dev/null; then
 			   eval "\$(fnm env --fnm-dir "\$HOME"/.node)"
 			fi
 		EOF
