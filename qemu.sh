@@ -14,6 +14,7 @@ QEMU_ARCH_PACKAGES=(
 	openbsd-netcat
 	iptables-nft
 	libguestfs
+	virtiofsd
 )
 
 QEMU_DEB_PACKAGES=(
