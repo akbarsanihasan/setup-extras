@@ -29,6 +29,12 @@ flatpak override --user --filesystem=host com.calibre_ebook.calibre
 flatpak override --user --filesystem=host-os com.calibre_ebook.calibre
 flatpak override --user --filesystem=xdg-config/calibre com.calibre_ebook.calibre
 
+flatpak install --user --noninteractive --assumeyes md.obsidian.Obsidian
+flatpak override --user --filesystem=home md.obsidian.Obsidian
+flatpak override --user --filesystem=host md.obsidian.Obsidian
+flatpak override --user --filesystem=host-os md.obsidian.Obsidian
+flatpak override --user --filesystem=xdg-config/calibre md.obsidian.Obsidian
+
 if ! grep -ie "\"library_path\":.*$HOME/Books" "$HOME"/.config/calibre/global.py.json &>/dev/null; then
 	sed -i --follow-symlinks "s|\"library_path\": *\"[^\"]*\"|\"library_path\": \"$HOME/Books\"|" "$HOME/.config/calibre/global.py.json"
 fi
